@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="PaginaInicial.html">Men's store</a>
+        <a class="navbar-brand" href="Camisas.html">Camisas</a>
+        <a class="navbar-brand" href="Short.html">Shorts</a>
+        <a class="navbar-brand" href="Tenis.html"> Tenis</a>
+        <a class="navbar-brand" href="#">Contato</a>
+        <a class="navbar-brand" href="QuemSomos.html">Quem Somos</a>
+    </nav>
+    <br>
+    <div class="container">
+        <form method="POST" action="http://adairsojr.ddns.net/processa_formulario.php" target="_blank" id="FormularioContato">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" class="form-control" name="nome">
+                <small id="msgNome" class="form-text text-danger"></small>
+            </div>
+            <div>
+                <label for="telefone">Telefone</label>
+                <input type="number" class="form-control" id="telefone" name="telefone">
+                <small id="msgTelefone" class="form-text text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Endereço de email</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" aria-describedby="emailHelp">
+                <small id="msgEmail" class="form-text text-danger"></small>
+            </div>
+            <div>
+                <label for="assunto">Assunto</label>
+                <input type="text" class="form-control" id="assunto" name="assunto">
+                <small id="msgAssunto" class="form-text text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="mensagem">Mensagem</label>
+                <textarea class="form-control" id="mensagem" name="mensagem" rows="3"></textarea>
+                <small id="msgMensagem" class="form-text text-danger"></small>
+            </div>
+
+            <button type="submit" class="btn btn-primary my-1">Enviar</button>
+        </form>
+    </div>
+
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="JavaScript/Validacao.js"></script>
+
+</body>
+
+</html>

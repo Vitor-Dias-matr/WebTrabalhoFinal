@@ -1,0 +1,957 @@
+
+/**
+ * Sizebay Virtual Fitting Room
+ * Copyright(C) Sizebay - Todos os direitos reservados
+ */
+.sizebay-plugin,
+.sizebay-plugin-overlay {
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+	padding: 0;
+	opacity: 1;
+	position: fixed !important;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.sizebay-plugin-overlay {
+	background: rgba( 30, 30, 30, 0.8 );
+	z-index: 99999998;
+	top: 0; left: 0;
+	transition-property: opacity;
+	transition-duration: 0.5s;
+}
+
+.sizebay-plugin {
+	background: white;
+	display: block;
+	z-index: 99999999;
+}
+
+.sizebay-plugin iframe {
+	width: 100% !important;
+	height: 100% !important;
+	position: static !important;
+	margin: 0px !important;
+	bottom: 0px !important;
+	top: auto !important;
+	right: 0px !important;
+	left: auto !important;
+	display: block !important;
+}
+
+.sizebay-close-button {
+	position: absolute;
+	top: 19px;
+	right: -39px;
+	width: 20px;
+	height: 20px;
+	z-index: 99999999;
+}
+
+.sizebay-close-button:hover {
+	cursor: pointer;
+}
+
+.sizebay-plugin-overlay.closed,
+.sizebay-plugin.closed {
+	border-width: 0;
+	opacity: 0;
+	max-height: 0; min-height: 0; height: 0;
+}
+
+body.sizebay-plugin-opened {
+	height: 100% !important;
+	min-height: 100% !important;
+	max-height: 100% !important;
+	width: calc(100% - 20px) !important;
+	min-width: 100% !important;
+	max-width: 100% !important;
+	overflow: hidden !important;
+	position: fixed !important;
+}
+@media screen and (max-width: 747px) {
+	.sizebay-plugin {
+		width:  100%;
+		height: 100%;
+		top: 0; bottom: 0;
+		left: 0; right: 0;
+	}
+	.sizebay-close-button { display: none; }
+}
+
+@media screen and (min-width: 748px) {
+	.sizebay-plugin {
+		width: calc( 100% - 20px ) !important;
+		height: 630px;
+		top: 50%;
+		left: 50%;
+
+		-webkit-transform: translate( -50%, -50% );
+		transform: translate( -50%, -50% );
+		-webkit-transform-origin: center center;
+		transform-origin: center center;
+		transition: 0.8s height, 0.5s opacity;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.sizebay-plugin {
+		max-width: 980px; min-width: 748px;
+		height: 620px;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 1050px){
+	.sizebay-close-button { right: 15px; }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.sizebay-plugin {
+		top: calc(50% - 310px);
+		left: calc(50% - 490px);
+	}
+}
+
+/*Botton flex style*/
+
+/*geral*/
+.sizebay-container {
+	display: flex;
+	flex-flow: row wrap;
+}
+#szb_fitting_room.button_plugin,
+#szb_size_chart.button_plugin {
+	width: 46%;
+	min-width: 140px;
+	max-width: 200px;
+	padding: 10px;
+	position: relative;
+	cursor: pointer;
+	background: transparent;
+	border: 1px solid #c9d3dd;
+}
+#szb_fitting_room.icon,
+#szb_size_chart.icon {
+	min-width: 150px;
+}
+.sizebay-container #szb_fitting_room.button_plugin + #szb_size_chart.button_plugin,
+.sizebay-container #szb_size_chart.button_plugin + #szb_fitting_room.button_plugin {
+	margin-left: 10px;
+}
+#szb_fitting_room.button_plugin:hover,
+#szb_size_chart.button_plugin:hover {
+	background-color: #f4f5f8;
+	border-color: #acbac6;
+	outline: none;
+}
+ /*tootip*/
+#szb_fitting_room.button_plugin .contextual-tooltip,
+#szb_size_chart.button_plugin .contextual-tooltip {
+	min-height: 50px;
+	width: 100%;
+	min-width: 120px;
+	max-width: 250px;
+    position: absolute;
+	right: 0px;
+	visibility: hidden;
+	opacity: 0;
+    border: 1px solid #C9C3DD;
+	background: #f4f5f8;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+#szb_fitting_room.button_plugin:hover .contextual-tooltip,
+#szb_size_chart.button_plugin:hover .contextual-tooltip,
+#szb_fitting_room.button_plugin.animate .contextual-tooltip {
+	opacity: 1;
+	z-index: 99999;
+	visibility: visible;
+    -webkit-transition: all 0.3s ease-in;
+    -moz-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.3, 0, 1, 1) 0ms;
+}
+.tooltip-bottom #szb_fitting_room.button_plugin .contextual-tooltip,
+.tooltip-bottom #szb_size_chart.button_plugin .contextual-tooltip {
+	top: 80%;
+}
+.tooltip-bottom #szb_fitting_room.button_plugin:hover .contextual-tooltip,
+.tooltip-bottom #szb_size_chart.button_plugin:hover .contextual-tooltip,
+.tooltip-bottom #szb_fitting_room.button_plugin.animate .contextual-tooltip {
+	top: 120%;
+}
+.tooltip-top #szb_fitting_room.button_plugin .contextual-tooltip,
+.tooltip-top #szb_size_chart.button_plugin .contextual-tooltip {
+	bottom: 80%;
+}
+.tooltip-top #szb_fitting_room.button_plugin:hover .contextual-tooltip,
+.tooltip-top #szb_size_chart.button_plugin:hover .contextual-tooltip,
+.tooltip-top #szb_fitting_room.button_plugin.animate .contextual-tooltip {
+	bottom: 130%;
+}
+
+#szb_fitting_room.button_plugin .contextual-tooltip .container-tooltip,
+#szb_size_chart.button_plugin .contextual-tooltip .container-tooltip {
+	font-size: 12px;
+	padding: 20px;
+}
+#szb_fitting_room.button_plugin .contextual-tooltip:after,
+#szb_size_chart.button_plugin .contextual-tooltip:after {
+	content: "";
+	/*width: 0;
+	height: 0;*/
+	top: 1px;
+	right: calc(50% - 2.5px);
+	position: absolute;
+	box-sizing: border-box;
+	border: 5px solid black;
+	border-color: #f4f5f8 #f4f5f8 transparent transparent;
+	transform-origin: 0 0;
+	transform: rotate(-45deg);
+	box-shadow: 1px -1px 0px #C9C3DD;
+}
+.tooltip-top #szb_fitting_room.button_plugin .contextual-tooltip:after,
+.tooltip-top #szb_size_chart.button_plugin .contextual-tooltip:after {
+	top: auto;
+	border-color: transparent transparent #f4f5f8 #f4f5f8;
+	box-shadow: -1px 1px 0px #C9C3DD;
+}
+#szb_fitting_room.button_plugin .contextual-tooltip .primary-text {
+	text-transform: uppercase;
+}
+#szb_fitting_room.button_plugin .contextual-tooltip .secondary-text,
+#szb_fitting_room.button_plugin .contextual-tooltip span,
+#szb_size_chart.button_plugin .contextual-tooltip span  {
+	text-transform: none;
+}
+#szb_fitting_room.button_plugin .contextual-tooltip .secondary-text {
+	color: #959FAD;
+}
+.state-recommended-size #szb_fitting_room.button_plugin .contextual-tooltip .default_text,
+#szb_fitting_room.button_plugin .contextual-tooltip .primary-text,
+#szb_fitting_room.button_plugin .contextual-tooltip .secondary-text {
+	display: none
+}
+.state-recommended-size #szb_fitting_room.button_plugin .contextual-tooltip .primary-text,
+.state-recommended-size #szb_fitting_room.button_plugin .contextual-tooltip .secondary-text,
+.state-profile-empty #szb_fitting_room.button_plugin .contextual-tooltip .default_text,
+#szb_size_chart.button_plugin .contextual-tooltip .default_text {
+	display: block;
+	text-align: center;
+	text-align-last: center;
+}
+
+/*icon*/
+#szb_fitting_room.button_plugin.icon.oneButton,
+#szb_size_chart.button_plugin.icon.oneButton {
+  width: 100%;
+}
+
+#szb_fitting_room.button_plugin.icon > span,
+#szb_size_chart.button_plugin.icon > span {
+  position: relative;
+  left: 12px;
+}
+
+ #szb_fitting_room.icon > span:before,
+ #szb_size_chart.icon > span:before {
+	content: '';
+	position: absolute;
+	height: 16px;
+	width: 19px;
+	left: -25px;
+	top: -1px;
+	font-size: 19px;
+}
+
+/*  Style Span Icon */
+
+
+/* Style Span Icon */
+
+#szb_fitting_room.icon > span:before,
+#szb_size_chart.icon > span:before {
+  content: "\61";
+  font-family: untitled-font-2;
+  text-transform: none;
+}
+#szb_size_chart.icon > span:before {
+  content: "\62";
+}
+
+/*link*/
+.sizebay-container #szb_fitting_room.button_plugin.link,
+.sizebay-container #szb_size_chart.button_plugin.link, 
+.sizebay-container.big_button #szb_fitting_room.button_plugin.link,
+.sizebay-container.big_button #szb_size_chart.button_plugin.link,
+.sizebay-container.medium_button #szb_fitting_room.button_plugin.link,
+.sizebay-container.medium_button #szb_size_chart.button_plugin.link {
+  border: none;
+  width: auto;
+  padding: 0;
+  min-width: 120px;
+  text-align: left;
+}
+#szb_fitting_room.button_plugin.link:hover,
+#szb_size_chart.button_plugin.link:hover {
+  background-color: transparent;
+  text-decoration: underline;
+}
+.tooltip-bottom #szb_fitting_room.button_plugin.link:hover .contextual-tooltip,
+.tooltip-bottom #szb_size_chart.button_plugin.link:hover .contextual-tooltip,
+.tooltip-bottom #szb_fitting_room.button_plugin.link.animate .contextual-tooltip{
+	top: 150%;
+}
+.tooltip-top #szb_fitting_room.button_plugin.link:hover .contextual-tooltip,
+.tooltip-top #szb_size_chart.button_plugin.link:hover .contextual-tooltip,
+.tooltip-top #szb_fitting_room.button_plugin.link.animate .contextual-tooltip{
+	bottom: 160%;
+}
+
+.sizebay-container #szb_fitting_room.button_plugin.icon.link,
+.sizebay-container #szb_size_chart.button_plugin.icon.link{
+	width: 140px;
+	min-width: 140px;
+}
+#szb_fitting_room.button_plugin.icon.link > span,
+#szb_size_chart.button_plugin.icon.link > span{
+	padding: 0;
+    left: 26px;
+    width: auto;
+}
+
+/*button vertical*/
+.sizebay-container.vertical #szb_fitting_room.button_plugin,
+.sizebay-container.vertical #szb_size_chart.button_plugin {
+	width: auto;
+	display: block;
+}
+.sizebay-container.vertical #szb_fitting_room.button_plugin + #szb_size_chart.button_plugin,
+.sizebay-container.vertical #szb_size_chart.button_plugin + #szb_fitting_room.button_plugin {
+	margin-top: 10px;
+	margin-left: 0
+}
+
+/*big button*/
+.sizebay-container.big_button #szb_fitting_room.button_plugin,
+.sizebay-container.big_button #szb_size_chart.button_plugin {
+    width: 46%;
+    padding: 10px;
+    min-width: 190px;
+}
+.sizebay-container.big_button #szb_fitting_room.button_plugin.link,
+.sizebay-container.big_button #szb_size_chart.button_plugin.link {
+	text-align: left;
+	text-align-last: left;
+}
+.sizebay-container.big_button #szb_fitting_room.button_plugin.icon.link > span,
+.sizebay-container.big_button #szb_size_chart.button_plugin.icon.link > span {
+	padding: 0;
+	left: 25px;
+	width: auto;
+}
+.sizebay-container.big_button #szb_fitting_room.icon > span:before,
+.sizebay-container.big_button #szb_size_chart.icon > span:before {
+	left: -25px;
+    top: -1px;
+}
+
+
+/* bug chrome 64 */
+
+.sizebay-container.big_button #szb_fitting_room.div-icon .div-icon,
+.sizebay-container.big_button #szb_size_chart.div-icon .div-icon {
+	left: -10px;
+	top: 0px;
+}
+
+.sizebay-container.big_button #szb_fitting_room.div-icon >span,
+.sizebay-container.big_button #szb_size_chart.div-icon >span {
+	left: 2px;
+    position: relative;
+}
+/* bug chrome 64  */
+
+.sizebay-container.big_button #szb_fitting_room.button_plugin.link.icon,
+.sizebay-container.big_button #szb_size_chart.button_plugin.link.icon {
+	min-width: 150px;
+	padding: 0
+}
+.sizebay-container.big_button #szb_fitting_room.button_plugin.icon > span,
+.sizebay-container.big_button #szb_size_chart.button_plugin.icon > span {
+	top: 0;
+}
+.sizebay-container.big_button.tooltip-bottom #szb_fitting_room.button_plugin.link:hover .contextual-tooltip,
+.sizebay-container.big_button.tooltip-bottom #szb_size_chart.button_plugin.link:hover .contextual-tooltip,
+.sizebay-container.big_button.tooltip-bottom #szb_fitting_room.button_plugin.animate .contextual-tooltip {
+    top: 125%;
+}
+
+/*medium button*/
+.sizebay-container.medium_button #szb_fitting_room.button_plugin,
+.sizebay-container.medium_button #szb_size_chart.button_plugin {
+	width: 130px;
+	min-width: 104px;
+	max-width: 130px;
+	padding: 8px 25px;
+	font-size: 12px;
+}
+.sizebay-container.medium_button #szb_fitting_room.button_plugin > span,
+.sizebay-container.medium_button #szb_size_chart.button_plugin > span {
+    font-size: 12px;
+}
+.sizebay-container.medium_button #szb_fitting_room.icon,
+.sizebay-container.medium_button #szb_size_chart.icon {
+	padding: 8px 30px;
+	text-align: left;
+	-moz-text-align-last: left;
+	text-align-last: left;
+}
+.sizebay-container.medium_button #szb_fitting_room.icon > span,
+.sizebay-container.medium_button #szb_size_chart.icon > span {
+	left: 20px;
+    top: auto;
+}
+.sizebay-container.medium_button #szb_fitting_room.icon > span:before,
+.sizebay-container.medium_button #szb_size_chart.icon > span:before {
+	top: 3px;
+	left: -31px;
+}
+.sizebay-container.medium_button #szb_fitting_room.icon.link > span:before,
+.sizebay-container.medium_button #szb_size_chart.icon.link > span:before{
+    left: -23px;
+}
+
+/* bug chrome 64 */
+
+.sizebay-container.medium_button #szb_fitting_room .span-icon,
+.sizebay-container.medium_button #szb_size_chart .span-icon {
+	top: 3px;
+	left: -31px;
+}
+
+
+/* bug chrome 64 */
+
+.sizebay-container.medium_button #szb_fitting_room.div-icon .div-icon,
+.sizebay-container.medium_button #szb_size_chart.div-icon .div-icon {
+	position: absolute !important;
+    left: calc(40% - 38px);
+	top: 4px;
+}
+
+.sizebay-container.medium_button #szb_fitting_room.div-icon >span,
+.sizebay-container.medium_button #szb_size_chart.div-icon >span {
+	left: 25%;
+    position: relative;
+}
+
+/* bug chrome 64 */
+
+
+
+/*small button*/
+.sizebay-container.small_button {
+	max-width: 190px;
+}
+.sizebay-container.small_button	#szb_fitting_room.button_plugin,
+.sizebay-container.small_button	#szb_size_chart.button_plugin {
+	padding: 22px 10px;
+	min-width: 90px;
+	width: 90px;
+	max-width: 90px;
+}
+.sizebay-container.small_button #szb_fitting_room.button_plugin.link.icon,
+.sizebay-container.small_button #szb_size_chart.button_plugin.link.icon {
+    padding: 17px 0;
+}
+.sizebay-container.small_button	#szb_fitting_room.button_plugin.link,
+.sizebay-container.small_button	#szb_size_chart.button_plugin.link {
+    padding: 0;
+    width: 60px;
+    min-width: 60px;
+}
+.sizebay-container.small_button	#szb_fitting_room.button_plugin.icon > span,
+.sizebay-container.small_button	#szb_size_chart.button_plugin.icon > span {
+	left: 0;
+	top: 10px;
+}
+.sizebay-container.small_button	#szb_fitting_room.icon > span:before,
+.sizebay-container.small_button	#szb_size_chart.icon > span:before {
+	top: -26px;
+	left: calc(50% - 10px);
+}
+.sizebay-container.small_button #szb_fitting_room.button_plugin .contextual-tooltip,
+.sizebay-container.small_button #szb_size_chart.button_plugin .contextual-tooltip {
+	left: calc(50% - 60px);
+}
+.sizebay-container.small_button.tooltip-bottom #szb_fitting_room.button_plugin:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-bottom #szb_size_chart.button_plugin:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-bottom #szb_fitting_room.button_plugin.animate .contextual-tooltip {
+	top: 115%;
+}
+.sizebay-container.small_button.tooltip-top #szb_fitting_room.button_plugin:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-top #szb_size_chart.button_plugin:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-top #szb_fitting_room.button_plugin.animate .contextual-tooltip {
+	bottom: 115%;
+}
+
+.sizebay-container.small_button.tooltip-bottom #szb_fitting_room.button_plugin.link:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-bottom	#szb_size_chart.button_plugin.link:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-bottom #szb_fitting_room.button_plugin.link.animate .contextual-tooltip  {
+	top: 130%;
+}
+.sizebay-container.small_button #szb_fitting_room.button_plugin.link .contextual-tooltip,
+.sizebay-container.small_button #szb_size_chart.button_plugin.link .contextual-tooltip {
+	left: calc(50% - 70px);
+}
+.sizebay-container.small_button.tooltip-bottom #szb_fitting_room.button_plugin.link.icon:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-bottom #szb_size_chart.button_plugin.link.icon:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-bottom #szb_fitting_room.button_plugin.link.icon.animate .contextual-tooltip {
+    top: 100%;
+}
+.sizebay-container.small_button.tooltip-top #szb_fitting_room.button_plugin.link.icon:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-top #szb_size_chart.button_plugin.link.icon:hover .contextual-tooltip,
+.sizebay-container.small_button.tooltip-top #szb_fitting_room.button_plugin.link.icon.animate .contextual-tooltip {
+    bottom: 115%;
+}
+
+
+@media screen and (min-width: 415px) and (max-width: 981px) {
+	/*garal*/
+	#szb_fitting_room.button_plugin,
+	#szb_size_chart.button_plugin {
+		width: 130px;
+		min-width: 104px;
+		padding: 8px 25px;
+	}
+	/*link*/
+	#szb_fitting_room.button_plugin.link,
+	#szb_size_chart.button_plugin.link {
+		width: 60px;
+		min-width: 60px;
+		padding: 0;
+	}
+	/*icon*/
+	#szb_fitting_room.icon,
+	#szb_size_chart.icon {
+		padding: 8px 30px;
+		text-align: left;
+	    -moz-text-align-last: left;
+		text-align-last: left;
+	}
+	#szb_fitting_room.icon > span,
+	#szb_size_chart.icon > span {
+		left: 20px;
+		top: auto;
+	}
+	.sizebay-container #szb_fitting_room.icon > span:before,
+	.sizebay-container #szb_size_chart.icon > span:before {
+		top: 3px;
+    	left: -29px;
+	}
+
+	.sizebay-container #szb_fitting_room.button_plugin.link.icon,
+	.sizebay-container #szb_size_chart.button_plugin.link.icon {
+		width: 85px;
+		padding: 8px 4px;
+		min-width: 85px;
+	}
+	#szb_fitting_room.button_plugin.link.icon .contextual-tooltip,
+	#szb_size_chart.button_plugin.link.icon .contextual-tooltip,
+	#szb_fitting_room.button_plugin.link.icon.animate .contextual-tooltip {
+		left: calc(50% - 50px);
+	}
+	.sizebay-container.tooltip-bottom #szb_fitting_room.button_plugin.link.icon:hover .contextual-tooltip,
+	.sizebay-container.tooltip-bottom #szb_size_chart.button_plugin.link.icon:hover .contextual-tooltip,
+	.sizebay-container.tooltip-bottom #szb_fitting_room.button_plugin.link.animate .contextual-tooltip{
+		top:100%;
+	}
+	.sizebay-container.tooltip-top #szb_fitting_room.button_plugin.link.icon:hover .contextual-tooltip,
+	.sizebay-container.tooltip-top #szb_size_chart.button_plugin.link.icon:hover .contextual-tooltip,
+	.sizebay-container.tooltip-top #szb_fitting_room.button_plugin.link.animate .contextual-tooltip {
+		bottom: 100%;
+	}
+	.sizebay-container.small_button.tooltip-top #szb_fitting_room.button_plugin:hover .contextual-tooltip,
+	.sizebay-container.small_button.tooltip-top #szb_size_chart.button_plugin:hover .contextual-tooltip,
+	.sizebay-container.small_button.tooltip-top #szb_fitting_room.button_plugin.animate .contextual-tooltip {
+	    bottom: 115%;
+	}
+	.big_button #szb_fitting_room.button_plugin,
+	.big_button #szb_size_chart.button_plugin,
+	.small_button #szb_fitting_room.button_plugin,
+	.small_button #szb_size_chart.button_plugin {
+		text-align: center;
+	    -moz-text-align-last: center;
+		text-align-last: center;
+	}
+	.small_button #szb_fitting_room.button_plugin.link,
+	.small_button #szb_size_chart.button_plugin.link{
+		text-align: left;
+	    -moz-text-align-last: left;
+		text-align-last: left;
+	}
+	.small_button #szb_fitting_room.button_plugin.link.icon .contextual-tooltip,
+	.small_button #szb_size_chart.button_plugin.link.icon .contextual-tooltip,
+	.small_button #szb_fitting_room.button_plugin.link.icon.animate .contextual-tooltip {
+	    left: calc(50% - 85px);
+	}
+	.medium_button #szb_fitting_room.button_plugin.link.icon,
+	.medium_button #szb_size_chart.button_plugin.link.icon {
+		padding: 0px 4px;
+	}
+	.medium_button.tooltip-top #szb_fitting_room.button_plugin.link.icon .contextual-tooltip  {
+		left: calc(50% - 60px);
+	}
+	.medium_button.tooltip-top #szb_fitting_room.button_plugin.link.icon.animate .contextual-tooltip {
+		bottom: 120%;
+	}
+	.sizebay-container.big_button #szb_fitting_room.button_plugin.icon.link .contextual-tooltip,
+	.sizebay-container.big_button #szb_size_chart.button_plugin.icon.link .contextual-tooltip {
+		left: auto;
+	}
+	.big_button.tooltip-top #szb_fitting_room.button_plugin.link.animate .contextual-tooltip {
+		bottom: 140%;
+	}
+}
+
+@media screen and (max-width: 414px){
+	/*geral*/
+	#szb_fitting_room.button_plugin,
+	#szb_size_chart.button_plugin {
+		max-width: 90px;
+		padding: 22px 10px;
+		font-size: 10px;
+		min-width: 90px;
+		width: 90px;
+	}
+	#szb_fitting_room.button_plugin .contextual-tooltip,
+	#szb_size_chart.button_plugin .contextual-tooltip {
+		left: calc(50% - 60px);
+	}
+
+	/*icon*/
+	#szb_fitting_room.button_plugin.icon > span,
+	#szb_size_chart.button_plugin.icon > span{
+		left: 0;
+    	top: 10px;
+	}
+	#szb_fitting_room.icon > span:before,
+	#szb_size_chart.icon > span:before {
+		top: -26px;
+		left: calc(50% - 8px);
+	}
+	#szb_fitting_room.button_plugin .contextual-tooltip .container-tooltip span,
+	#szb_size_chart.button_plugin .contextual-tooltip .container-tooltip span,
+	#szb_fitting_room.button_plugin > span,
+	#szb_size_chart.button_plugin > span {
+		font-size: 10px;
+		text-align: center;
+	}
+
+	/*link*/
+	.sizebay-container #szb_fitting_room.button_plugin.link,
+	.sizebay-container #szb_size_chart.button_plugin.link {
+		width: 50px;
+		min-width: 50px;
+		height: auto;
+	}
+	#szb_fitting_room.button_plugin.link .contextual-tooltip,
+	#szb_size_chart.button_plugin.link .contextual-tooltip {
+    	left: calc(50% - 70px);
+	}
+	.tooltip-bottom #szb_fitting_room.button_plugin.link:hover .contextual-tooltip,
+	.tooltip-bottom #szb_size_chart.button_plugin.link:hover .contextual-tooltip,
+	.tooltip-bottom #szb_fitting_room.button_plugin.link.animate .contextual-tooltip{
+		top: 200%;
+	}
+	.tooltip-top #szb_fitting_room.button_plugin.link.icon:hover .contextual-tooltip,
+	.tooltip-top #szb_size_chart.button_plugin.link.icon:hover .contextual-tooltip,
+	.tooltip-top #szb_fitting_room.button_plugin.link.icon.animate .contextual-tooltip{
+		bottom: 210%;
+	}
+	.sizebay-container.big_button #szb_fitting_room.button_plugin.link,
+	.sizebay-container.big_button #szb_size_chart.button_plugin.link {
+		height: 20px
+	}
+
+	.sizebay-container #szb_fitting_room.button_plugin.icon.link,
+	.sizebay-container #szb_size_chart.button_plugin.icon.link{
+		width: 50px;
+		min-width: 50px;
+		min-height: 50px;
+	}
+	#szb_fitting_room.button_plugin.icon.link > span,
+	#szb_size_chart.button_plugin.icon.link > span {
+		left: 0;
+	}
+
+	.sizebay-container.big_button #szb_fitting_room.button_plugin,
+	.sizebay-container.big_button #szb_size_chart.button_plugin {
+	    min-width: 46%;
+	}
+	.big_button #szb_fitting_room.button_plugin .contextual-tooltip,
+	.big_button #szb_size_chart.button_plugin .contextual-tooltip {
+	    left: 0;
+	}
+
+	.medium_button #szb_fitting_room.button_plugin.link.icon,
+	.medium_button #szb_size_chart.button_plugin.link.icon {
+		width: 80px;
+		min-width: 80px;
+		padding: 8px 0px 8px 23px;
+		text-align: center;
+		text-align-last: center;
+	}
+	.medium_button.tooltip-top #szb_fitting_room.button_plugin.link.icon .contextual-tooltip  {
+		left: calc(50% - 60px);
+	}
+	.medium_button.tooltip-top #szb_fitting_room.button_plugin.link.icon.animate .contextual-tooltip {
+		bottom: 120%;
+	}
+	.sizebay-container.big_button #szb_fitting_room.button_plugin.link.icon,
+	.sizebay-container.big_button #szb_size_chart.button_plugin.link.icon {
+		min-width: 100px;
+	}
+	.tooltip-top #szb_fitting_room.button_plugin.animate .contextual-tooltip {
+		bottom: 115%;
+	}
+	.sizebay-container.big_button.tooltip-top #szb_fitting_room.button_plugin.link.animate .contextual-tooltip {
+		bottom: 120%;
+	}
+	.sizebay-container.big_button.tooltip-top #szb_fitting_room.button_plugin.link .contextual-tooltip{
+		left: calc(50% - 80px);
+	}
+}
+
+
+/**
+ * Embedded size recommendation.
+ */
+.sizebay-embedded-recommendation-button,
+.sizebay-embedded-recommendation-button * {
+	margin: 0; padding: 0;
+	position: relative; top: 0; left: 0;
+	list-style: none;
+	border: none;
+	overflow: auto;
+	font-family: sans-serif;
+	font-size: 12px;
+	color: #333c4e;
+	text-transform: none;
+}
+
+.sizebay-embedded-recommendation-button {
+	height: 40px;
+	width: 240px;
+}
+.sizebay-embedded-recommendation-button .sizebay_content {
+	background-color: #f4f5f8;
+}
+
+.sizebay-embedded-recommendation-button .sizebay_content > .sizebay-state-loading,
+.sizebay-embedded-recommendation-button .sizebay_content > .sizebay-state-initial-loading,
+.sizebay-embedded-recommendation-button .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button .sizebay_content > .sizebay-state-recommended-size,
+.sizebay-embedded-recommendation-button .sizebay_box > .sizebay-state-recommended-size-placeholder {
+	display: none !important;
+}
+
+.sizebay-embedded-recommendation-button.state-loading .sizebay_content > .sizebay-state-loading,
+.sizebay-embedded-recommendation-button.state-initial-loading .sizebay_content > .sizebay-state-initial-loading,
+.sizebay-embedded-recommendation-button.state-profile-empty .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-recommended-size,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_box > .sizebay-state-recommended-size-placeholder  {
+	display: block !important;
+}
+.sizebay-embedded-recommendation-button.state-loading .sizebay_box > .sizebay_icon.sizebay_icon-loading,
+.sizebay-embedded-recommendation-button.state-initial-loading .sizebay_box > .sizebay_icon.sizebay_icon-loading {
+	display: inline-block;
+	width: 22px;
+}
+
+.sizebay-embedded-recommendation-button.state-profile-empty:hover .sizebay_content,
+.sizebay-embedded-recommendation-button.state-recommended-size:hover .sizebay_content {
+	background-color: #E5EDF4;
+	border-color: #ACBAC6;
+}
+.sizebay-embedded-recommendation-button.state-profile-empty:hover .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size:hover .sizebay_content > .sizebay-state-profile-empty {
+	color: #FC326C;
+}
+
+.sizebay-embedded-recommendation-button.state-profile-empty .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-recommended-size,
+.sizebay-embedded-recommendation-button.state-recommended-size:hover .sizebay_content > .sizebay-state-recommended-size,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size:hover .sizebay_content > .sizebay-state-profile-empty {
+	transition: all 0.2s linear
+}
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-recommended-size {
+	opacity: 1;
+	transform: translateY(-41px);
+
+}
+.sizebay-embedded-recommendation-button.state-recommended-size:hover .sizebay_content > .sizebay-state-recommended-size {
+	opacity: 0;
+	transform: translateY(0px);
+}
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-profile-empty {
+	opacity: 0;
+	transform: translateY(-40px);
+}
+.sizebay-embedded-recommendation-button.state-recommended-size:hover .sizebay_content > .sizebay-state-profile-empty {
+	opacity: 1;
+	transform: translateX(0px);
+}
+
+.sizebay-embedded-recommendation-button > .sizebay_box,
+.sizebay-embedded-recommendation-button > .sizebay_content {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+
+.sizebay-embedded-recommendation-button > .sizebay_content {
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+	border: 1px solid #c9d3dd;
+	border-left: none;
+	height: 38px;
+	transition: all 0.2s linear;
+	overflow: hidden;
+}
+
+.sizebay-embedded-recommendation-button > .sizebay_content > .sizebay_icon {
+	position: absolute;
+	right: 8px;
+	top: 8px;
+}
+
+.sizebay-embedded-recommendation-button > .sizebay_content > div {
+	display: block;
+	padding-top: 12px;
+	text-align: center;
+	height: 29px;
+	line-height: 1.2;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-recommended-size {
+	padding: 6px 34px 0px 15px;
+	height: 36px;
+}
+.sizebay-embedded-recommendation-button.state-profile-empty .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-profile-empty {
+	height: 28px;
+	padding-top: 12px;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-profile-empty {
+	padding: 12px 30px 0 17px;
+}
+.sizebay-embedded-recommendation-button.state-profile-empty .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-profile-empty,
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_content > .sizebay-state-recommended-size {
+	text-transform: uppercase;
+}
+
+.sizebay-embedded-recommendation-button > .sizebay_box {
+	float: left;
+	padding: 8px;
+	height: 22px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+	background-color: #FC326C;
+}
+
+.sizebay-embedded-recommendation-button.state-profile-empty .sizebay_box {
+	height: 22px;
+	padding: 9px;
+}
+.sizebay-embedded-recommendation-button.state-loading .sizebay_box,
+.sizebay-embedded-recommendation-button.state-initial-loading .sizebay_box {
+	border: 1px solid #FC326C;
+	background-color: white;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_box > .sizebay-state-recommended-size-placeholder {
+	font-weight: 600 !important;
+	color: white !important;
+	text-align: center !important;
+	cursor: pointer !important;
+	background-color: transparent !important;
+	line-height: 1 !important;
+	margin: 0 !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-1 .sizebay_box {
+	padding: 7px 10px 11px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-2 .sizebay_box,
+.sizebay-embedded-recommendation-button.state-recommended-size.size-3 .sizebay_box {
+	padding: 9px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-4 .sizebay_box {
+	padding: 12px 8px 6px 8px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-5 .sizebay_box {
+	padding: 12px 4px 6px 4px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-1 .sizebay_box > .sizebay-state-recommended-size-placeholder {
+	font-size: 24px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-2 .sizebay_box > .sizebay-state-recommended-size-placeholder {
+	font-size: 20px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-3 .sizebay_box > .sizebay-state-recommended-size-placeholder {
+	font-size: 18px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-4 .sizebay_box > .sizebay-state-recommended-size-placeholder {
+	font-size: 16px !important;
+}
+.sizebay-embedded-recommendation-button.state-recommended-size.size-5 .sizebay_box > .sizebay-state-recommended-size-placeholder {
+	font-size: 14px !important;
+}
+
+/*icon*/
+.sizebay-embedded-recommendation-button .sizebay_icon:before,
+.sizebay-embedded-recommendation-button .sizebay_icon {
+	content: '';
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+}
+
+.sizebay-embedded-recommendation-button.state-recommended-size .sizebay_icon.sizebay_icon-info {
+	background-image: url(assets/imgs/info.svg);
+	display: block;
+	height: 20px;
+	width: 20px;
+	margin: 0;
+	padding: 0;
+	left: initial;
+}
+.sizebay-embedded-recommendation-button.state-profile-empty .sizebay_icon.sizebay_icon-cabide {
+	background-image: url(assets/imgs/cabide-white.svg);
+	display: block;
+	width: 22px;
+}
+
+.sizebay-embedded-recommendation-button, .sizebay-embedded-recommendation-button *,.sizebay-embedded-recommendation-button *:before, .sizebay-embedded-recommendation-button *:after {
+	box-sizing: content-box;
+}
+
+.dont-show-btn {
+    display: none !important;
+}

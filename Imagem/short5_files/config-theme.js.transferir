@@ -1,0 +1,23 @@
+var configTheme = {
+	"languages": [ { name: "pt_br",
+			 link: "https://virtual-fitting-room.sizebay.com/assets/default/languages/pt_br.js"}
+		     ],
+
+	"metric_sistem":[ "metric" ],
+	//"metric_sistem":[ "metric", "imperial" ],
+
+	"gender": [ "F", "M" ],
+	//"gender": [ "F" ],
+
+
+	"imagens":[
+		{ value:"adult_F", link: "/assets/default/images/adult_F_measures.svg" },
+		{ value:"adult_M", link: "/assets/default/images/adult_M_measures.svg" },
+		{ value:"adult_F_plus_size", link: "/assets/default/images/adult_F_measures_plus_size.svg" },
+		{ value:"adult_M_plus_size", link: "/assets/default/images/adult_M_measures_plus_size.svg" },
+		{ value:"infant_F", link: "/assets/default/images/infant_F_measures.svg" },
+		{ value:"infant_M", link: "/assets/default/images/infant_M_measures.svg" },
+		{ value:"kids_F", link: "/assets/default/images/kids_F_measures.svg" },
+		{ value:"kids_M", link: "/assets/default/images/kids_M_measures.svg" }
+	]
+};
